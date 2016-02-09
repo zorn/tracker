@@ -18,13 +18,34 @@ module.exports = function(environment) {
       // when it is created
     }
   };
-
+  // config/environment.js
+  ENV.contentSecurityPolicy = {
+      'default-src': "'self'",
+      // Allow scripts from live reload
+      'script-src': "'self' ws://localhost:49152",
+      // Add external font uri
+      'font-src': "'self'",
+      // Allow data (ajax/websocket) from course api https://bnr-tracker-api.herokuapp.com
+      // Allow scripts from live reload
+      'connect-src': "'self' https://bnr-tracker-api.herokuapp.com ws://localhost:49152",
+      // Allow images from the origin itself (i.e. current domain)
+      'img-src': "'self'",
+      // Allow inline styles
+      'style-src': "'self' 'unsafe-inline'",
+      // `media-src` will be omitted from policy
+      // Browser will fallback to default-src for media resources (which is to deny, see above).
+      'media-src': null
+  }
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV['ember-cli-mirage'] = {
+      enabled: false
+      // enabled: true
+    }
   }
 
   if (environment === 'test') {
