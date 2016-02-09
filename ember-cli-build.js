@@ -28,6 +28,6 @@ module.exports = function(defaults) {
   // along with the exports of each module as its value.
 
   app.import(bootstrapPath + 'javascripts/bootstrap.js');
-
+  app.import('bower_components/moment/moment.js');
   return app.toTree();
 };
