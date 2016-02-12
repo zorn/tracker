@@ -1,0 +1,30 @@
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  sighting: Ember.computed.alias('model.sighting'),
+      actions: {
+        update() {
+          if(this.get('sighting').get('hasDirtyAttributes')){
+            this.get('sighting').save().then(() => {
+              // return to listing
+              this.transitionToRoute('sightings');
+            });
+          }
+        },
+        cancel() {
+          if(this.get('sighting').get('hasDirtyAttributes')){
+            this.get('sighting').rollbackAttributes();
+            this.transitionToRoute('sightings');
+          }
+        },
+        delete() {
+          var self = this;
+          if (window.confirm("Are you sure you want to delete this sighting?")) {
+            this.get('sighting').destroyRecord().then(() => {
+              // transitions to sightings;
+              self.transitionToRoute('sightings');
+            });
+          }
+        }
+    }
+});
